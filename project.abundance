@@ -413,7 +413,7 @@
                     "ioValues": [
                         {
                             "name": "diameter",
-                            "ioValue": 3
+                            "ioValue": 4
                         }
                     ],
                     "description": "Creates a new circle."
@@ -812,8 +812,8 @@
         {
             "atomType": "Export",
             "name": "Export",
-            "x": 0.8154761904761905,
-            "y": 0.6685236768802229,
+            "x": 0.8187830687830687,
+            "y": 0.6518105849582172,
             "uniqueID": "2b7aab44-7356-441c-9e74-ca047bb54e79",
             "ioValues": [
                 {
@@ -1008,13 +1008,13 @@
                 {
                     "atomType": "Circle",
                     "name": "Circle",
-                    "x": 0.08068783068783068,
-                    "y": 0.4568245125348189,
+                    "x": 0.08664021164021164,
+                    "y": 0.479108635097493,
                     "uniqueID": "b9470519-e32e-4402-b60c-1d5dc042034f",
                     "ioValues": [
                         {
                             "name": "diameter",
-                            "ioValue": 3
+                            "ioValue": 4
                         }
                     ],
                     "description": "Creates a new circle."
@@ -1347,6 +1347,54 @@
             ],
             "fileTypeVersion": 1,
             "compiledBom": {}
+        },
+        {
+            "atomType": "Difference",
+            "name": "Difference",
+            "x": 0.542989417989418,
+            "y": 0.30919220055710306,
+            "uniqueID": "6d35e270-1e3e-4e5d-9236-7e653f198ff4",
+            "ioValues": [
+                {
+                    "name": "geometry1",
+                    "ioValue": "e03069bb-1f34-444f-bea1-6150b4856fb7"
+                },
+                {
+                    "name": "geometry2",
+                    "ioValue": "8a36fa19-dadc-4d6a-9631-e72c75220b41"
+                }
+            ],
+            "description": "Subtracts shape two from shape one."
+        },
+        {
+            "atomType": "Export",
+            "name": "Export",
+            "x": 0.6435185185185185,
+            "y": 0.3147632311977716,
+            "uniqueID": "c8b62a30-8415-4b84-ab13-14eac77f071d",
+            "ioValues": [
+                {
+                    "name": "geometry",
+                    "ioValue": "6d35e270-1e3e-4e5d-9236-7e653f198ff4"
+                },
+                {
+                    "name": "Resolution (dpi)",
+                    "ioValue": 96
+                },
+                {
+                    "name": "Part Name",
+                    "ioValue": "Roofing-Drill-Guide"
+                },
+                {
+                    "name": "File Type",
+                    "ioValue": "STL"
+                }
+            ],
+            "description": "Export Atom, let's you choose a type of file to Export.",
+            "type": "STL",
+            "resolution": 96,
+            "importIndex": 0,
+            "partName": "Roofing-Drill-Guide"
         }
     ],
     "allConnectors": [
@@ -1419,6 +1467,27 @@
             "ap2Primary": true,
             "ap1ID": "100559ce-e974-49cb-b449-0a0a878ed54c",
             "ap2ID": "ae47e4ce-30af-4682-815c-adc47e748beb"
+        },
+        {
+            "ap1Name": "geometry",
+            "ap2Name": "geometry1",
+            "ap2Primary": false,
+            "ap1ID": "e03069bb-1f34-444f-bea1-6150b4856fb7",
+            "ap2ID": "6d35e270-1e3e-4e5d-9236-7e653f198ff4"
+        },
+        {
+            "ap1Name": "Geometry",
+            "ap2Name": "geometry2",
+            "ap2Primary": false,
+            "ap1ID": "8a36fa19-dadc-4d6a-9631-e72c75220b41",
+            "ap2ID": "6d35e270-1e3e-4e5d-9236-7e653f198ff4"
+        },
+        {
+            "ap1Name": "geometry",
+            "ap2Name": "geometry",
+            "ap2Primary": false,
+            "ap1ID": "6d35e270-1e3e-4e5d-9236-7e653f198ff4",
+            "ap2ID": "c8b62a30-8415-4b84-ab13-14eac77f071d"
         }
     ],
     "unitsKey": "MM",
