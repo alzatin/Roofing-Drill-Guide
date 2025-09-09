@@ -1,13 +1,392 @@
 {
     "atomType": "Molecule",
-    "name": "Roofing Drill Guide",
+    "name": "Roofing-Drill-Guide",
     "x": 0,
     "y": 0,
     "uniqueID": "c0c278a4-14e6-4513-a5a7-5d977b0c2649",
     "ioValues": [],
     "description": "Molecules provide an organizational structure to contain atoms. Double click on a molecule to enter it. Use the up arrow in the upper right hand corner of the screen to go up one level.",
     "topLevel": true,
-    "allAtoms": [],
+    "allAtoms": [
+        {
+            "atomType": "Output",
+            "name": "Output",
+            "x": 0.98,
+            "y": 0.5,
+            "uniqueID": "8d3003cb-32a1-491f-b225-38d424b8ba2a",
+            "ioValues": [],
+            "description": "Connect geometry here to make it available in the next level up. "
+        },
+        {
+            "atomType": "GitHubMolecule",
+            "name": "Corrugated-Roofing-Circle-v2",
+            "x": 0.2619047619047619,
+            "y": 0.22005571030640667,
+            "uniqueID": "d471ba3e-3f51-4baa-9d09-502ed36678d8",
+            "ioValues": [
+                {
+                    "name": "Number",
+                    "ioValue": 75
+                }
+            ],
+            "description": "Molecules provide an organizational structure to contain atoms. Double click on a molecule to enter it. Use the up arrow in the upper right hand corner of the screen to go up one level.",
+            "topLevel": false,
+            "allAtoms": [
+                {
+                    "atomType": "Output",
+                    "name": "Output",
+                    "x": 0.98,
+                    "y": 0.5,
+                    "uniqueID": "2e7fde43-08cd-4e2c-82a1-57d9565e0148",
+                    "ioValues": [
+                        {
+                            "name": "number or geometry",
+                            "ioValue": "3b5c2425-78ca-46dd-8da7-628a04674ed7"
+                        }
+                    ],
+                    "description": "Connect geometry here to make it available in the next level up. "
+                },
+                {
+                    "atomType": "Code",
+                    "name": "Code",
+                    "x": 0.4708994708994709,
+                    "y": 0.4444444444444444,
+                    "uniqueID": "3b5c2425-78ca-46dd-8da7-628a04674ed7",
+                    "ioValues": [
+                        {
+                            "name": "number",
+                            "ioValue": 75
+                        },
+                        {
+                            "name": "height",
+                            "ioValue": 40
+                        }
+                    ],
+                    "description": "Defines a Replicad code block.",
+                    "codeVersion": 1,
+                    "code": " \n      //Inputs:[number, height]\n      //This defines the molecules inputs and creates variables with the same names which can be referenced in the code\n      \n      let factor = 2;\n      const period = 76;\n      const amplitude = 19 / 2;\n      const xScale = period / (2 * Math.PI);\n      const nPeriods = number; \n      const circumference = nPeriods * period;\n      const radius = circumference/(2*Math.PI);\n      const angle = 35\n\n      function computeX(fraction){\n        const theta = 2 * Math.PI *fraction; // angle in radians\n        const x = radius*Math.cos(theta);\n        return x;\n      }\n\n      function computeY(fraction){\n        const theta = 2 * Math.PI * fraction; // angle in radians\n        const y = radius*Math.sin(theta);\n        return y;\n      }\n\n      function tangentAngle(fraction, clockwise = false) {\n          const theta = 2 * Math.PI * fraction;\n          const phi = clockwise\n              ? theta - Math.PI / 2 // CW\n              : theta + Math.PI / 2; // CCW\n\n          let degrees = phi * (180 / Math.PI);\n        \n          return degrees; // radians\n      }\n      \n      let shape = replicad.draw();\n\n      \n      shape.movePointerTo([computeX(0), computeY(0)])\n      \n      for (let i = 0; i < nPeriods; i++) {\n        let oneLess = (2*i-1)/(2*number);\n        let fractionStart = i/number //The percentage of the way around the circle that this point is\n        let fractionMiddle =  (2*i+1)/(2*number);\n      \n        // First spline: 0 to ÃÂ (up and back down)\n        shape = shape.smoothSplineTo(\n          [computeX(fractionStart), computeY(fractionStart)],\n          {\n            startTangent: tangentAngle(oneLess) + angle,         // Going up at start\n            startFactor: factor,\n            endTangent: tangentAngle(fractionStart)-angle,          // Coming down at ÃÂ\n            endFactor: factor\n          }\n        )\n        // Second spline: ÃÂ to 2ÃÂ (down and back up)\n        .smoothSplineTo(\n          [computeX(fractionMiddle), computeY(fractionMiddle)],\n          {\n            startTangent: tangentAngle(fractionStart)-angle,        // Going down at ÃÂ\n            startFactor: factor,\n            endTangent: tangentAngle(fractionMiddle) + angle,           // Coming up at 2ÃÂ\n            endFactor: factor\n          }\n        );\n      }\n\n      shape = shape.smoothSplineTo(\n          [computeX(0), computeY(0)],\n          {\n            startTangent: tangentAngle((2*number-1)/(2*number))+angle,        // Going down at ÃÂ\n            startFactor: factor,\n            endTangent: tangentAngle(0) - angle,           // Coming up at 2ÃÂ\n            endFactor: factor\n          });\n      \n      // Add base lines and close shape\n      shape = shape\n        .close();                          // Close path\n\n      const newPlane = new replicad.Plane().pivot(0, 'Y');\n      \n      //For our new geometry we need to define the tags, color, plane, etc\n      let shape2 = {\n          geometry: [shape], \n          tags: [\"aTag\"],\n          color: '#A3CE5B',\n          plane: newPlane,\n          bom: []\n      }\n      \n      //Then we can return our created shape in just the same way\n      return shape2\n      "
+                },
+                {
+                    "atomType": "Input",
+                    "name": "Number",
+                    "x": 0.029699999999999997,
+                    "y": 0.39444444444444443,
+                    "uniqueID": "f62186d7-dc17-4360-b617-f90a6c0f736d",
+                    "ioValues": [],
+                    "description": "Adds an input to the parent molecule. If the parent molecule is the top level of the project then the input will be available when the project is shared or imported into another project. Name is editable",
+                    "type": "number"
+                }
+            ],
+            "allConnectors": [
+                {
+                    "ap1Name": "geometry",
+                    "ap2Name": "number or geometry",
+                    "ap2Primary": false,
+                    "ap1ID": "3b5c2425-78ca-46dd-8da7-628a04674ed7",
+                    "ap2ID": "2e7fde43-08cd-4e2c-82a1-57d9565e0148"
+                },
+                {
+                    "ap1Name": "number or geometry",
+                    "ap2Name": "number",
+                    "ap2Primary": false,
+                    "ap1ID": "f62186d7-dc17-4360-b617-f90a6c0f736d",
+                    "ap2ID": "3b5c2425-78ca-46dd-8da7-628a04674ed7"
+                }
+            ],
+            "parentRepo": {
+                "lastFoundGit": "2025-09-09T18:43:14.606Z",
+                "privateRepo": false,
+                "repoName": "Corrugated-Roofing-Circle-v2",
+                "dateCreated": "2025-07-11T20:40:29Z",
+                "readMe": "https://raw.githubusercontent.com/BarbourSmith/Corrugated-Roofing-Circle-v2/master/README.md?sanitize=true",
+                "yyyy": 2025,
+                "topMoleculeID": "74e97323-dbcf-4577-bf9a-c3bca8a2acee",
+                "githubMoleculesUsed": [],
+                "html_url": "https://github.com/BarbourSmith/Corrugated-Roofing-Circle-v2",
+                "topics": [],
+                "parentRepo": null,
+                "forks": 0,
+                "dateModified": "739468",
+                "ranking": 0,
+                "searchField": "corrugated-roofing-circle-v2 barboursmith this project recreates the corrugated roofing circle using splines instead of a sampled function which is hopefully more performant ",
+                "owner": "BarbourSmith",
+                "description": "This project recreates the corrugated roofing circle using splines instead of a sampled function which is hopefully more performant",
+                "contentURL": "https://raw.githubusercontent.com/BarbourSmith/Corrugated-Roofing-Circle-v2/master/project.abundance?sanitize=true",
+                "svgURL": "https://raw.githubusercontent.com/BarbourSmith/Corrugated-Roofing-Circle-v2/master/project.svg?sanitize=true",
+                "isLocal": false
+            },
+            "unitsKey": "Unitless",
+            "fileTypeVersion": 1,
+            "compiledBom": []
+        },
+        {
+            "atomType": "GitHubMolecule",
+            "name": "Corrugated-Roofing-Circle-v2",
+            "x": 0.26256613756613756,
+            "y": 0.5515320334261838,
+            "uniqueID": "20c87b77-15a7-4247-96fb-db0df5d5297e",
+            "ioValues": [
+                {
+                    "name": "Number",
+                    "ioValue": 92
+                }
+            ],
+            "description": "Molecules provide an organizational structure to contain atoms. Double click on a molecule to enter it. Use the up arrow in the upper right hand corner of the screen to go up one level.",
+            "topLevel": false,
+            "allAtoms": [
+                {
+                    "atomType": "Output",
+                    "name": "Output",
+                    "x": 0.98,
+                    "y": 0.5,
+                    "uniqueID": "3ddbec4e-eb93-4fc3-b00e-5f28ebd3cfd0",
+                    "ioValues": [
+                        {
+                            "name": "number or geometry",
+                            "ioValue": "c904300f-bb7c-4f64-b3ca-c368f3c87345"
+                        }
+                    ],
+                    "description": "Connect geometry here to make it available in the next level up. "
+                },
+                {
+                    "atomType": "Code",
+                    "name": "Code",
+                    "x": 0.4708994708994709,
+                    "y": 0.4444444444444444,
+                    "uniqueID": "c904300f-bb7c-4f64-b3ca-c368f3c87345",
+                    "ioValues": [
+                        {
+                            "name": "number",
+                            "ioValue": 92
+                        },
+                        {
+                            "name": "height",
+                            "ioValue": 40
+                        }
+                    ],
+                    "description": "Defines a Replicad code block.",
+                    "codeVersion": 1,
+                    "code": " \n      //Inputs:[number, height]\n      //This defines the molecules inputs and creates variables with the same names which can be referenced in the code\n      \n      let factor = 2;\n      const period = 76;\n      const amplitude = 19 / 2;\n      const xScale = period / (2 * Math.PI);\n      const nPeriods = number; \n      const circumference = nPeriods * period;\n      const radius = circumference/(2*Math.PI);\n      const angle = 35\n\n      function computeX(fraction){\n        const theta = 2 * Math.PI *fraction; // angle in radians\n        const x = radius*Math.cos(theta);\n        return x;\n      }\n\n      function computeY(fraction){\n        const theta = 2 * Math.PI * fraction; // angle in radians\n        const y = radius*Math.sin(theta);\n        return y;\n      }\n\n      function tangentAngle(fraction, clockwise = false) {\n          const theta = 2 * Math.PI * fraction;\n          const phi = clockwise\n              ? theta - Math.PI / 2 // CW\n              : theta + Math.PI / 2; // CCW\n\n          let degrees = phi * (180 / Math.PI);\n        \n          return degrees; // radians\n      }\n      \n      let shape = replicad.draw();\n\n      \n      shape.movePointerTo([computeX(0), computeY(0)])\n      \n      for (let i = 0; i < nPeriods; i++) {\n        let oneLess = (2*i-1)/(2*number);\n        let fractionStart = i/number //The percentage of the way around the circle that this point is\n        let fractionMiddle =  (2*i+1)/(2*number);\n      \n        // First spline: 0 to ÃÂ (up and back down)\n        shape = shape.smoothSplineTo(\n          [computeX(fractionStart), computeY(fractionStart)],\n          {\n            startTangent: tangentAngle(oneLess) + angle,         // Going up at start\n            startFactor: factor,\n            endTangent: tangentAngle(fractionStart)-angle,          // Coming down at ÃÂ\n            endFactor: factor\n          }\n        )\n        // Second spline: ÃÂ to 2ÃÂ (down and back up)\n        .smoothSplineTo(\n          [computeX(fractionMiddle), computeY(fractionMiddle)],\n          {\n            startTangent: tangentAngle(fractionStart)-angle,        // Going down at ÃÂ\n            startFactor: factor,\n            endTangent: tangentAngle(fractionMiddle) + angle,           // Coming up at 2ÃÂ\n            endFactor: factor\n          }\n        );\n      }\n\n      shape = shape.smoothSplineTo(\n          [computeX(0), computeY(0)],\n          {\n            startTangent: tangentAngle((2*number-1)/(2*number))+angle,        // Going down at ÃÂ\n            startFactor: factor,\n            endTangent: tangentAngle(0) - angle,           // Coming up at 2ÃÂ\n            endFactor: factor\n          });\n      \n      // Add base lines and close shape\n      shape = shape\n        .close();                          // Close path\n\n      const newPlane = new replicad.Plane().pivot(0, 'Y');\n      \n      //For our new geometry we need to define the tags, color, plane, etc\n      let shape2 = {\n          geometry: [shape], \n          tags: [\"aTag\"],\n          color: '#A3CE5B',\n          plane: newPlane,\n          bom: []\n      }\n      \n      //Then we can return our created shape in just the same way\n      return shape2\n      "
+                },
+                {
+                    "atomType": "Input",
+                    "name": "Number",
+                    "x": 0.029699999999999997,
+                    "y": 0.39444444444444443,
+                    "uniqueID": "4ace435b-4c63-4a43-8193-2ea8bf41b395",
+                    "ioValues": [],
+                    "description": "Adds an input to the parent molecule. If the parent molecule is the top level of the project then the input will be available when the project is shared or imported into another project. Name is editable",
+                    "type": "number"
+                }
+            ],
+            "allConnectors": [
+                {
+                    "ap1Name": "geometry",
+                    "ap2Name": "number or geometry",
+                    "ap2Primary": false,
+                    "ap1ID": "c904300f-bb7c-4f64-b3ca-c368f3c87345",
+                    "ap2ID": "3ddbec4e-eb93-4fc3-b00e-5f28ebd3cfd0"
+                },
+                {
+                    "ap1Name": "number or geometry",
+                    "ap2Name": "number",
+                    "ap2Primary": false,
+                    "ap1ID": "4ace435b-4c63-4a43-8193-2ea8bf41b395",
+                    "ap2ID": "c904300f-bb7c-4f64-b3ca-c368f3c87345"
+                }
+            ],
+            "parentRepo": {
+                "lastFoundGit": "2025-09-09T18:43:14.606Z",
+                "privateRepo": false,
+                "repoName": "Corrugated-Roofing-Circle-v2",
+                "dateCreated": "2025-07-11T20:40:29Z",
+                "readMe": "https://raw.githubusercontent.com/BarbourSmith/Corrugated-Roofing-Circle-v2/master/README.md?sanitize=true",
+                "yyyy": 2025,
+                "topMoleculeID": "74e97323-dbcf-4577-bf9a-c3bca8a2acee",
+                "githubMoleculesUsed": [],
+                "html_url": "https://github.com/BarbourSmith/Corrugated-Roofing-Circle-v2",
+                "topics": [],
+                "parentRepo": null,
+                "forks": 0,
+                "dateModified": "739468",
+                "ranking": 0,
+                "searchField": "corrugated-roofing-circle-v2 barboursmith this project recreates the corrugated roofing circle using splines instead of a sampled function which is hopefully more performant ",
+                "owner": "BarbourSmith",
+                "description": "This project recreates the corrugated roofing circle using splines instead of a sampled function which is hopefully more performant",
+                "contentURL": "https://raw.githubusercontent.com/BarbourSmith/Corrugated-Roofing-Circle-v2/master/project.abundance?sanitize=true",
+                "svgURL": "https://raw.githubusercontent.com/BarbourSmith/Corrugated-Roofing-Circle-v2/master/project.svg?sanitize=true",
+                "isLocal": false
+            },
+            "unitsKey": "Unitless",
+            "fileTypeVersion": 1,
+            "compiledBom": []
+        },
+        {
+            "atomType": "GitHubMolecule",
+            "name": "Corrugated-Roofing-Line",
+            "x": 0.27050264550264547,
+            "y": 0.8133704735376045,
+            "uniqueID": "c53d54e3-7055-403d-998b-ca11428c622c",
+            "ioValues": [
+                {
+                    "name": "Number",
+                    "ioValue": 10
+                },
+                {
+                    "name": "Height",
+                    "ioValue": 40
+                }
+            ],
+            "description": "Molecules provide an organizational structure to contain atoms. Double click on a molecule to enter it. Use the up arrow in the upper right hand corner of the screen to go up one level.",
+            "topLevel": false,
+            "allAtoms": [
+                {
+                    "atomType": "Output",
+                    "name": "Output",
+                    "x": 0.98,
+                    "y": 0.5,
+                    "uniqueID": "2f778135-5a1f-4642-bec4-0fc68202dac8",
+                    "ioValues": [
+                        {
+                            "name": "number or geometry",
+                            "ioValue": "bfea31e3-0c87-49cf-9ea5-db7a017d69d9"
+                        }
+                    ],
+                    "description": "Connect geometry here to make it available in the next level up. "
+                },
+                {
+                    "atomType": "Code",
+                    "name": "Code",
+                    "x": 0.4027777777777778,
+                    "y": 0.5069637883008357,
+                    "uniqueID": "bfea31e3-0c87-49cf-9ea5-db7a017d69d9",
+                    "ioValues": [
+                        {
+                            "name": "number",
+                            "ioValue": 10
+                        },
+                        {
+                            "name": "height",
+                            "ioValue": 40
+                        }
+                    ],
+                    "description": "Defines a Replicad code block.",
+                    "codeVersion": 1,
+                    "code": " \n      //Inputs:[number, height]\n      //This defines the molecules inputs and creates variables with the same names which can be referenced in the code\n      \n      let factor = 2;\n      const period = 76;\n      const xScale = period / (2 * Math.PI);\n      const nPeriods = number; // ÃÂ°ÃÂÃÂÃÂ Number of periods to repeat\n      const angle = 35;\n      \n      let shape = replicad.draw();\n      \n      for (let i = 0; i < nPeriods; i++) {\n        let offsetX = i * period;\n      \n        // First spline: 0 to ÃÂÃÂ (up and back down)\n        shape = shape.smoothSplineTo(\n          [offsetX + Math.PI * xScale, 0],\n          {\n            startTangent: angle,         // Going up at start\n            startFactor: factor,\n            endTangent: -1*angle,          // Coming down at ÃÂÃÂ\n            endFactor: factor\n          }\n        )\n        // Second spline: ÃÂÃÂ to 2ÃÂÃÂ (down and back up)\n        .smoothSplineTo(\n          [offsetX + 2 * Math.PI * xScale, 0],\n          {\n            startTangent: -1*angle,        // Going down at ÃÂÃÂ\n            startFactor: factor,\n            endTangent: angle,           // Coming up at 2ÃÂÃÂ\n            endFactor: factor\n          }\n        );\n      }\n      \n      // Add base lines and close shape\n      shape = shape\n        .lineTo([nPeriods * period, -height])  // Right-bottom corner\n        .lineTo([0, -height])                  // Left-bottom corner\n        .close();                          // Close path\n\n      const newPlane = new replicad.Plane().pivot(0, 'Y');\n      \n      //For our new geometry we need to define the tags, color, plane, etc\n      let shape2 = {\n          geometry: [shape], \n          tags: [\"aTag\"],\n          color: '#A3CE5B',\n          plane: newPlane,\n          bom: []\n      }\n      \n      //Then we can return our created shape in just the same way\n      return shape2\n      "
+                },
+                {
+                    "atomType": "Input",
+                    "name": "Number",
+                    "x": 0.029699999999999997,
+                    "y": 0.48055555555555557,
+                    "uniqueID": "89e0f665-cc88-45bc-b602-89b0956b522e",
+                    "ioValues": [],
+                    "description": "Adds an input to the parent molecule. If the parent molecule is the top level of the project then the input will be available when the project is shared or imported into another project. Name is editable",
+                    "type": "number"
+                },
+                {
+                    "atomType": "Input",
+                    "name": "Height",
+                    "x": 0.029699999999999997,
+                    "y": 0.7638888888888888,
+                    "uniqueID": "e61a7553-151c-4f3d-8faa-97ea0f49db40",
+                    "ioValues": [],
+                    "description": "Adds an input to the parent molecule. If the parent molecule is the top level of the project then the input will be available when the project is shared or imported into another project. Name is editable",
+                    "type": "number"
+                }
+            ],
+            "allConnectors": [
+                {
+                    "ap1Name": "geometry",
+                    "ap2Name": "number or geometry",
+                    "ap2Primary": false,
+                    "ap1ID": "bfea31e3-0c87-49cf-9ea5-db7a017d69d9",
+                    "ap2ID": "2f778135-5a1f-4642-bec4-0fc68202dac8"
+                },
+                {
+                    "ap1Name": "number or geometry",
+                    "ap2Name": "number",
+                    "ap2Primary": false,
+                    "ap1ID": "89e0f665-cc88-45bc-b602-89b0956b522e",
+                    "ap2ID": "bfea31e3-0c87-49cf-9ea5-db7a017d69d9"
+                },
+                {
+                    "ap1Name": "number or geometry",
+                    "ap2Name": "height",
+                    "ap2Primary": false,
+                    "ap1ID": "e61a7553-151c-4f3d-8faa-97ea0f49db40",
+                    "ap2ID": "bfea31e3-0c87-49cf-9ea5-db7a017d69d9"
+                }
+            ],
+            "parentRepo": {
+                "lastFoundGit": "2025-09-09T18:43:14.606Z",
+                "privateRepo": false,
+                "repoName": "Corrugated-Roofing-Line",
+                "dateCreated": "2025-07-23T16:56:38Z",
+                "readMe": "https://raw.githubusercontent.com/BarbourSmith/Corrugated-Roofing-Line/master/README.md?sanitize=true",
+                "yyyy": 2025,
+                "topMoleculeID": "ed9cd772-5603-476b-a930-f79dd0f51d32",
+                "githubMoleculesUsed": [],
+                "html_url": "https://github.com/BarbourSmith/Corrugated-Roofing-Line",
+                "topics": [],
+                "parentRepo": null,
+                "forks": 0,
+                "dateModified": "739468",
+                "ranking": 0,
+                "searchField": "corrugated-roofing-line barboursmith a straight line with bumps to match corrugated roofing material ",
+                "owner": "BarbourSmith",
+                "description": "A straight line with bumps to match corrugated roofing material",
+                "contentURL": "https://raw.githubusercontent.com/BarbourSmith/Corrugated-Roofing-Line/master/project.abundance?sanitize=true",
+                "svgURL": "https://raw.githubusercontent.com/BarbourSmith/Corrugated-Roofing-Line/master/project.svg?sanitize=true",
+                "isLocal": false
+            },
+            "unitsKey": "MM",
+            "fileTypeVersion": 1,
+            "compiledBom": []
+        },
+        {
+            "atomType": "Molecule",
+            "name": "Drill Guide",
+            "x": 0.49007936507936506,
+            "y": 0.6239554317548747,
+            "uniqueID": "198cf8bc-8797-4824-9444-3f8f5dda8c9a",
+            "ioValues": [],
+            "description": "Molecules provide an organizational structure to contain atoms. Double click on a molecule to enter it. Use the up arrow in the upper right hand corner of the screen to go up one level.",
+            "topLevel": false,
+            "allAtoms": [
+                {
+                    "atomType": "Output",
+                    "name": "Output",
+                    "x": 0.98,
+                    "y": 0.5,
+                    "uniqueID": "66b8194e-6da1-453e-9ec3-6dc367c1a290",
+                    "ioValues": [],
+                    "description": "Connect geometry here to make it available in the next level up. "
+                },
+                {
+                    "atomType": "Rectangle",
+                    "name": "Rectangle",
+                    "x": 0.37367724867724866,
+                    "y": 0.5348189415041783,
+                    "uniqueID": "c10a4cc6-b93b-4a5b-bdad-1919398cc273",
+                    "ioValues": [
+                        {
+                            "name": "x length",
+                            "ioValue": 130
+                        },
+                        {
+                            "name": "y length",
+                            "ioValue": 30
+                        }
+                    ],
+                    "description": "Creates a new rectangle."
+                }
+            ],
+            "allConnectors": [],
+            "fileTypeVersion": 1,
+            "compiledBom": {}
+        }
+    ],
     "allConnectors": [],
     "unitsKey": "MM",
     "fileTypeVersion": 1,
